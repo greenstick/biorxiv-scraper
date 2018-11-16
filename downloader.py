@@ -130,7 +130,6 @@ if __name__ == "__main__":
 			articleQueue.append((href, title))
 
 	# Get Article Download Links
-	cache = []
 	i, l = 0, len(articleQueue)
 	if l > 0:
 		print("%d of %d Links Scraped" % (len(cachedLinks), n))
@@ -147,7 +146,7 @@ if __name__ == "__main__":
 						"title" : title,
 						"download-href" : downloadLink
 					}
-					# Append Record to Cache
+					# Append Record to Cache (Update) - Not Ideal But it Works
 					with open(cacheFile, "r") as handle:
 						cache = json.load(handle)
 						cache.append(record)
@@ -160,8 +159,9 @@ if __name__ == "__main__":
 			except:
 				# Re-Append to Article Queue if Request Fails
 				articleQueue.append((href, title))
-
+	
 	# Load Cache
+	cache = []
 	if len(cache) == 0:
 		with open(cacheFile, "r") as handle:
 			cache = json.load(handle)
